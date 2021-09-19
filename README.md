@@ -11,4 +11,5 @@ Pulsar for Salesforce is a desktop/mobile app developed by Luminix, Inc that all
 * Pulsar is available for iOS, Android and Chromebooks, and Windows 10. Download, and start syncing your organization! For premium use, which allows full customization, contact Sales at Luminix, Inc.
 * And... you can completely customize the UI by writing HTML/CSS/Javascript apps for embedding in Pulsar, (which is what the remainder of this document is about ;)
 
-## Table of contents
+## How to use these Examples
+* 

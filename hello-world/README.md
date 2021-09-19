@@ -1,18 +1,16 @@
 Pulsar for Salesforce Javascript API Examples
 =============================================
 
+These are designed to be a simple, top level example of customizing Pulsar
+
 Pulsar Javascript API Examples
 ------------------------------
 
 This repository contains canonical example code of how to interact with the Pulsar platform from a custom embedded HTML/CSS/Javascript app.
 
-### `hello.html`
-
-A simple, self-contained, "hello world" example that exercises the Pulsar Javascript API.  Performs some simple queries and prints out the results.
-
 ### `helloembed.html`
 
-Similar to `hello.html` example, but launches another document/app within an iframe.  This document can also make API calls into Pulsar.
+Similar to `hello.html` found within the [PulsarForSalesforceJSExamples](https://github.com/luminixinc/PulsarForSalesforceJSExamples) but launches another document/app within an iframe.  This document can also make API calls into Pulsar.
 
 ### `hellosync.html`
 
@@ -35,14 +33,6 @@ The process to upload changes to Salesforce, resync Pulsar to view them, and edi
 For quicker editing and debugging of your HTML/JS code you will need to set up a [local development server](https://luminix.atlassian.net/wiki/spaces/PD/pages/831029249/Local+Development+Server).  
 
 WARNING: running a local development server is only recommended for testing orgs, not orgs that are in production.  Caveat Programmer!
-
-### `testserve.js`
-
-Running `node testserve.js` will serve the `hello.html` file at http://127.0.0.1:3002.  (Note that if the _Node.js_ server fails to start, then you may need to install _Node.js_ on your development machine).
-
-Once Pulsar is configured correctly, (don't forget to toggle the "ENABLE DEVELOPMENT SERVER" switch on the advanced settings page), go back to the `hello.html` document in the Content Library (Files) tab.  Pulsar will now connect to http://127.0.0.1:3002 when you next (re-)open the document.
-
-At this point, you can locally change `hello.html`, and when you restart the server and/or refresh the page (or re-open the document) from Pulsar, you should see your changes show up.
 
 ### `testservedir.js`
 

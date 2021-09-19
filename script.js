@@ -1,6 +1,7 @@
 /* ******************************
 * BEGIN Pulsar bridge boilerplate
-* ******************************/
+* ***************************** */
+
 var BRIDGE_ON = true; // set to false to test file in desktop browser
 
 var bridge = function () {
@@ -280,131 +281,6 @@ function getSyncInfo() {
     });
 }
 
-// ===================== Tylers code ====================
-
-
-const addImageToGallery = (imageData) => {
-    document.getElementById(imageData.buttonId).classList.remove("d-none")
-    document.getElementById(imageData.buttonId).src=imageData.url;
-    document.getElementById(imageData.textId).innerHTML = "Why is Batman unhappy with you?"
-    
-}
-
-const isEmpty = (obj) => {
-    return Object.keys(obj).length === 0;
-}
-
-// API: readSFFile
-
-// This API call returns an array containing a dictionary with the ContentVersion object for the ContentDocument or ContentVersion matching the Id specified.
-// Important returned fields:
-// VersionData – base64 encoded file data (if ReturnBase64Data is not false)
-// ThumbBody – base64 encoded file thumbnail data (if ReturnBase64Data is not false and the file is an image)
-// FileURL – local URL to the file
-// ThumbURL – local URL to the file thumbnail (empty string if file is not an image)
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
-const readSFFile = (id, buttonId, textId, textChange) => {
-    var request = {
-        "type" : "readSFFile",
-        "data" : {
-                "Id" : id,    // Required ContentDocument or ContentVersion Id
-                // "ReturnBase64Data" : false  Optional, default true.  If false you will still have access to URL of file
-            }
-        };
-        
-    bridge.sendRequest(request, (responseData) => { 
-        const addImageData = {
-            buttonId : buttonId,
-            textId : textId,
-            url : ''
-        }
-
-        if (isEmpty(responseData.data)) {
-            addImageData.url = 'https://i.pinimg.com/474x/02/cd/27/02cd27ef0a7127d4979fd869e5add80f.jpg'
-            addImageToGallery(addImageData)
-        } else {
-            addImageData.url = responseData.data[0].FileURL
-            alert('The File is located here: ' + responseData.data[0].FileURL) 
-            addImageToGallery(addImageData)
-        }
-    });
-}
-
-// API: createSFFileFromFilePath
-
-// The createSFFileFromFilePath method allows creation of Salesforce Files directly from valid, accessible, device file paths. 
-// The intended File parent SObject Id and FilePath are required arguments. The ContentType of the File may be optionally specified in MIME type format, 
-// as in the example below. Optionally, you can specify a file name, instead of using the name of the original file. 
-// On success, the response data contains the Id of the created ContentDocument.
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
-const createSFFileFromFilePath = (filePath) => {
-    const request = {
-        type : "createSFFileFromFilePath",
-        data : {
-            ParentId : "0015e00000AZCmrAAH",
-            FilePath : filePath
-        }
-    };
-
-    bridge.sendRequest(request, (responseData) => {
-        if (responseData.type == "createSFFileResponse") {
-            console.log('Created ContentDocument Id: ' + JSON.stringify(responseData.data));
-            alert('content created')
-            readSFFile(responseData.data.AttachmentId, "gallery-image", "gallery-image-text")
-        }
-        else {
-            console.log('World is on fire..' + JSON.stringify(responseData))
-        }
-    });
-}
-
-// Select Image from Gallery
-
-// API: cameraPhotoPicker
-// The cameraPhotoPicker command opens the device photo library, allowing the user to pick photos. The callback response data contains an array of objects containing file path and content type.
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API
-document.getElementById('select-image-from-gallery').addEventListener('click', () => {
-    const request = {
-        type : "cameraPhotoPicker",
-        data : {}
-    };
-
-    bridge.sendRequest(request, (responseData) => {
-        if ((responseData.type === 'cameraPhotoPickerResponse') && (responseData.data != null)) {
-            const arrResult = responseData.data;
-
-            arrResult.forEach(e => {
-                const filePath = e.FilePath;
-                const contentType = e.ContentType;
-                createSFFileFromFilePath(filePath)
-                console.log(`camera photo path: ${filePath} content type: ${contentType}`)
-            });
-        }
-        else {
-            console.log('It broke. Shame on you');
-            console.log(JSON.stringify(responseData.data))
-        }
-    });
-});
-
-// Take Photo and create File
-
-document.getElementById('create-salesforcefile-from-camera').addEventListener('click', () => {
-    const request = {
-        "type": "createSFFileFromCamera",
-        "data": {
-            "ParentId": "0015e00000AZCmrAAH",
-        }
-    };
-
-    bridge.sendRequest(request, (responseData) => {
-        if (responseData.type == "createSFFileResponse") {
-            alert('Created ContentDocumentId');
-            readSFFile(responseData.data.AttachmentId, "camera-image", "camera-image-text")
-        }
-        else {
-            console.log('What did you do?');
-            console.log(JSON.stringify(responseData))
-        }
-    });
-});
+document.getElementById('image-gallery').onclick = () => {
+  location.href = 'photo-gallery-example/index.html';
+};
