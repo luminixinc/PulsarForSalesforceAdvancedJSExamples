@@ -280,7 +280,3 @@ function getSyncInfo() {
         }
     });
 }
-
-document.getElementById('image-gallery').onclick = () => {
-  location.href = 'photo-gallery-example/index.html';
-};

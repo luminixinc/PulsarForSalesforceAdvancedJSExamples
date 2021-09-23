@@ -11,5 +11,10 @@ Pulsar for Salesforce is a desktop/mobile app developed by Luminix, Inc that all
 * Pulsar is available for iOS, Android and Chromebooks, and Windows 10. Download, and start syncing your organization! For premium use, which allows full customization, contact Sales at Luminix, Inc.
 * And... you can completely customize the UI by writing HTML/CSS/Javascript apps for embedding in Pulsar, (which is what the remainder of this document is about ;)
 
-## How to use these Examples
-* 
+## What these are.
+* The `hello-world` folder contains more advanced exmaples on using an i-frame, monitoring sync process updates, proxy server for local development server, and a more complex server for running a more sophisticated, larger web app. 
+* The `pulsar-api-example` folder contains snippets and examples of some of the more commonly used APIs that you can copy, paste, and redesign for your use case. 
+
+## How to use
+* Compress the contents of the `resources` folder and attach to the [`pulsar.docs.enableHTMLResources`](https://luminix.atlassian.net/wiki/spaces/PD/pages/49152017/Pulsar+as+a+Platform#globalsharedresources) setting. This bundles the various resources (HTML, CSS, Javascript, images, fonts, etc) independently of your individual `.pulsarapp` webapps, allowing these resources to be shared among all examples.
+* Zip the contents of the `pulsar-api-examples` folder into a single file with the extension `.pulsarapp` -- Pulsar will unzip and load the top-level index.html file (which itself can reference the other bundled scripts and resources.

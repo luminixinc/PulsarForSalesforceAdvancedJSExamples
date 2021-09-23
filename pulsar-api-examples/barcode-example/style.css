@@ -1,0 +1,28 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #d63384 !important;
+}
+
+#invalid-product-name {
+  color: #dc3545 !important;
+}
+
+#invalid-product-price {
+  color: #dc3545 !important;
+}
+
+#nothing-scanned {
+  color: #dc3545 !important;
+}
