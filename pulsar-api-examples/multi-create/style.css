@@ -1,0 +1,51 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+@media(max-width:576px) {
+  .text-change {
+      font-size: 12px !important;
+  };
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #d63384 !important;
+}
+
+td {
+  word-break: break-all;
+}
+
+.col-width-5 {
+  width: 17% !important;
+}
+
+.col-width-6 {
+  width: 15% !important;
+}
+
+.noPadding {
+  padding: 0 2px !important;
+  margin: 0 !important;
+}
+
+#back-to-main-page {
+  position: absolute; 
+  top: 10px;
+  left: 40px;
+}
+
+#reset {
+  position: absolute; 
+  top: 10px;
+  right: 40px;
+}

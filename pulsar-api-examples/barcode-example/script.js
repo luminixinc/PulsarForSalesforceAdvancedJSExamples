@@ -5,19 +5,25 @@ let product2Id = '';
 let pricebook2Id = '';
 let productPrice = '';
 
-// Creates a Success Alert
+/*
+  Creates a Success Alert
+*/
 const createAlert = () => {
   document.getElementById('alert-open').classList.remove('d-none');
 }
 
-// Closes the Success Alert
+/*
+  Closes the Success Alert
+*/
 document.getElementById('alert-close').onclick = () => {
   document.getElementById('alert-open').classList.add('d-none');
 };
 
-// Creates an entry within the Standard Price Book
-// API: "CRUD" Request Types - Create
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#create
+/*
+  Creates an entry within the Standard Price Book
+  API: "CRUD" Request Types - Create
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#create
+*/
 const createPricebookItem = () => {
   const request = {
     type: 'create',
@@ -35,9 +41,11 @@ const createPricebookItem = () => {
   });
 }
 
-// Searches local DB for the standard price book and returns the ID
-// API - Local SQL Queries - Select (read-only local query)
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#select
+/*
+  Searches local DB for the standard price book and returns the ID
+  API - Local SQL Queries - Select (read-only local query)
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#select
+*/
 const searchPriceBooks = () => {
   const request = {
     type: 'select',
@@ -54,9 +62,11 @@ const searchPriceBooks = () => {
   });
 }
 
-// Create request for a new Product
-// API: "CRUD" Request Types - Create
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#create
+/*
+  Create request for a new Product
+  API: "CRUD" Request Types - Create
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#create
+*/
 const createProduct = () => {
   const request = {
     type: 'create',
@@ -74,10 +84,12 @@ const createProduct = () => {
   });
 }
 
-// Function to open the devices camera and scan a barcode
-// API: scanBarcode
-// The scanBarcode command allows the user to scan a barcode. The response callback will return the value of the scanned barcode.
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#scanbarcode
+/*
+  Function to open the devices camera and scan a barcode
+  API: scanBarcode
+  The scanBarcode command allows the user to scan a barcode. The response callback will return the value of the scanned barcode.
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#scanbarcode
+*/
 const barcodeScanner = () => {
   const request = { 
     type: 'scanBarcode',

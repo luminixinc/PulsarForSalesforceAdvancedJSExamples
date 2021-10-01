@@ -1,5 +1,4 @@
 // Adds the image to the Gallery
-
 const addImageToGallery = (imageData) => {
   document.getElementById(imageData.buttonId).classList.remove("d-none");
   document.getElementById(imageData.buttonId).src = imageData.url;
@@ -7,21 +6,21 @@ const addImageToGallery = (imageData) => {
 }
 
 // Quick check to see if the response object is empty -> error
-
 const isEmpty = (obj) => {
   return Object.keys(obj).length === 0;
 }
 
-// API: readSFFile
+/*
+  API: readSFFile
 
-// This API call returns an array containing a dictionary with the ContentVersion object for the ContentDocument or ContentVersion matching the Id specified.
-// Important returned fields:
-// VersionData – base64 encoded file data (if ReturnBase64Data is not false)
-// ThumbBody – base64 encoded file thumbnail data (if ReturnBase64Data is not false and the file is an image)
-// FileURL – local URL to the file
-// ThumbURL – local URL to the file thumbnail (empty string if file is not an image)
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
-
+  This API call returns an array containing a dictionary with the ContentVersion object for the ContentDocument or ContentVersion matching the Id specified.
+  Important returned fields:
+  VersionData – base64 encoded file data (if ReturnBase64Data is not false)
+  ThumbBody – base64 encoded file thumbnail data (if ReturnBase64Data is not false and the file is an image)
+  FileURL – local URL to the file
+  ThumbURL – local URL to the file thumbnail (empty string if file is not an image)
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
+*/
 const readSFFile = (id, buttonId, textId) => {
   const request = {
     type: 'readSFFile',
@@ -54,14 +53,15 @@ const readSFFile = (id, buttonId, textId) => {
   });
 }
 
-// API: createSFFileFromFilePath
+/*
+  API: createSFFileFromFilePath
 
-// The createSFFileFromFilePath method allows creation of Salesforce Files directly from valid, accessible, device file paths. 
-// The intended File parent SObject Id and FilePath are required arguments. The ContentType of the File may be optionally specified in MIME type format, 
-// as in the example below. Optionally, you can specify a file name, instead of using the name of the original file. 
-// On success, the response data contains the Id of the created ContentDocument.
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
-
+  The createSFFileFromFilePath method allows creation of Salesforce Files directly from valid, accessible, device file paths. 
+  The intended File parent SObject Id and FilePath are required arguments. The ContentType of the File may be optionally specified in MIME type format, 
+  as in the example below. Optionally, you can specify a file name, instead of using the name of the original file. 
+  On success, the response data contains the Id of the created ContentDocument.
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
+*/
 const createSFFileFromFilePath = (filePath) => {
   const request = {
     type: 'createSFFileFromFilePath',
@@ -84,12 +84,15 @@ const createSFFileFromFilePath = (filePath) => {
   });
 }
 
-// Select Image from Gallery
 
-// API: cameraPhotoPicker
-// The cameraPhotoPicker command opens the device photo library, allowing the user to pick photos. The callback response data contains an array of objects containing file path and content type.
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API
+/*
+  API: cameraPhotoPicker
 
+  Select Image from Gallery
+
+  The cameraPhotoPicker command opens the device photo library, allowing the user to pick photos. The callback response data contains an array of objects containing file path and content type.
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API
+*/
 document.getElementById('select-image-from-gallery').addEventListener('click', () => {
   const request = {
     type: "cameraPhotoPicker",
@@ -116,14 +119,16 @@ document.getElementById('select-image-from-gallery').addEventListener('click', (
   });
 });
 
-// Take Photo and create File
-
-// API: createSFFileFromCamera
-// The createSFFiletFromCamera method allows creation of Salesforce Files directly from the device's camera. 
-// The intended File's parent SObject Id is a required argument. Optionally, you can specify a file name for the File, instead of using the name of the original file. 
-// On success, the response data contains the Id of the created ContentDocument.
-// https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
-
+/*
+  API: createSFFileFromCamera
+  
+  Take Photo and create File
+  
+  The createSFFiletFromCamera method allows creation of Salesforce Files directly from the device's camera. 
+  The intended File's parent SObject Id is a required argument. Optionally, you can specify a file name for the File, instead of using the name of the original file. 
+  On success, the response data contains the Id of the created ContentDocument.
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API
+*/
 document.getElementById('create-salesforcefile-from-camera').addEventListener('click', () => {
   const request = {
     type: 'createSFFileFromCamera',
