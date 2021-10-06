@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Salesforce Files API</title>
+  <!-- Import Boostrap CSS -->
+  <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css">
+  <!-- Import local CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <!-- Main Title of report -->
+    <div class="container pt-5">
+      <div class="pb-4">
+        <button type="button" id="reset" class="btn btn-outline-danger d-none">Reset</button>
+        <button type="button" id="back-to-main-page" class="btn btn-outline-primary">Back</button>
+      </div>
+
+      <h1 class="h1-header text-center">Edit and Delete Child Records Example</h1>
+    </div>
+
+    <!-- Select Account Card -->
+    <div class="container p-4" id="select-account" style="max-width: 30rem;">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Select Account</div>
+            <div class="container">
+              <ul class="list-group list-group-flush pb-3">
+                <div class="fw-bold text-center py-3 fs-5">Pulsar APIs used</div>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#lookupObject"
+                  class="list-group-item list-group-item-action border-end border-start"
+                  target="_blank"><code>lookupObject</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#create"
+                  class="list-group-item list-group-item-action border-end border-start"
+                  target="_blank"><code>create</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#update"
+                class="list-group-item list-group-item-action border-end border-start"
+                target="_blank"><code>update</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#select"
+                class="list-group-item list-group-item-action border-end border-start"
+                target="_blank"><code>select</code></a>
+              </ul>
+            </div>
+            <div class="card-body text-center gx-5">
+              <button type="button" id="account-search" class="w-100 h-100 btn btn-lg btn-outline-primary">Account
+                Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details of selected Account -->
+    <div class="container p-4 d-none" id="selected-account">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Selected Account</div>
+            <div class="card-body gx-5">
+              <div id="selected-account-details">
+                <!-- showAccountDetails function will add the Account details here -->
+              </div>
+
+              <div class="d-flex">
+                <button type="button" id="account-confirm"
+                  class="w-100 mx-2 h-100 btn btn-outline-primary">Confirm</button>
+                <button type="button" id="search-again" class="w-100 mx-2 h-100 btn btn-outline-primary">Select New
+                  Account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Show all Contact records for the selected account -->
+    <div class="container-fluid text-change p-4 d-none" id="show-all-records">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Records</div>
+            <div class="card-body gx-5">
+              <div class="table-responsive text-break" id="all-records-list">
+                <table class="table table-striped text-center" id="entry-table">
+                  <thead>
+                    <tr>
+                      <th class="col-width-5" scope="col">First Name</th>
+                      <th class="col-width-5" scope="col">Last Name</th>
+                      <th class="col-width-5" scope="col">Title</th>
+                      <th class="col-width-5" scope="col">Phone Number</th>
+                      <th class="col-width-5" scope="col">Email Address</th>
+                      <th class="col-width-6" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="show-all-records-body">
+                  </tbody>
+                </table>
+              </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container for editing a record -->
+    <div class="container p-4 d-none" id="record-edit">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Edit Record</div>
+
+            <div class="card-body gx-5">
+              <div class="row my-2">
+                <label for="input-first-name" class="col-sm-4 col-form-label">First Name:</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="input-first-name" required>
+                </div>
+              </div>
+
+              <div class="row my-2">
+                <label for="input-last-name" class="col-sm-4 col-form-label">Last Name:</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="input-last-name">
+                </div>
+              </div>
+
+              <div class="row my-2">
+                <label for="input-title" class="col-sm-4 col-form-label">Title:</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="input-title">
+                </div>
+              </div>
+
+              <div class="row my-2">
+                <label for="input-phone-number" class="col-sm-4 col-form-label">Phone Number:</label>
+                <div class="col-sm-8">
+                  <input type="tel" class="form-control" id="input-phone-number">
+                </div>
+              </div>
+
+              <div class="row mt-2 mb-3">
+                <label for="input-email-address" class="col-sm-4 col-form-label">Email Address:</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" id="input-email-address">
+                </div>
+              </div>
+
+              <div class="container d-flex" id="create-edit-buttons" style="width: 28rem;">
+                <div class="text-center pt-3 px-2" id="update-record-button">
+                  <button type="button" id="update-record" class="h-100 btn btn-outline-primary">Update Record</button>
+                </div>
+                <div class="text-center pt-3 px-2" id="delete-record-button">
+                  <button type="button" id="update-record" class="h-100 btn btn-outline-danger">Delete Record</button>
+                </div>
+              </div>
+              <div class="text-center pt-3 d-none" id="confirm-record-updates-button">
+                <button type="button" id="update-record" class="h-100 btn btn-outline-primary">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Pulsar Bridge script -->
+  <script src="../resources/pulsar-bridge.js"></script> 
+  <!-- Import local JS file -->
+  <script src="edit-records.js"></script>
+  <!-- Import JS for Bootstrap -->
+  <script src="../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -7,6 +7,6 @@ document.getElementById('barcode').onclick = () => {
 };
 
 document.getElementById('multi-create-edit').onclick = () => {
-  location.href = 'multi-create/index.html';
+  location.href = 'crud-examples/index.html';
 };
 
