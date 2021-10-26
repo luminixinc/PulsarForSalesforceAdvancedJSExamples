@@ -3,3 +3,4 @@ package-lock.json
 package.json
 testservedir.js
 pulsar-api-examples/resources
+.DS_Store
