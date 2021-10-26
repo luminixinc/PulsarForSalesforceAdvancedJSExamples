@@ -10,3 +10,10 @@ document.getElementById('multi-create-edit').onclick = () => {
   location.href = 'crud-examples/index.html';
 };
 
+document.getElementById('signature').onclick = () => {
+  location.href = 'signature-box-example/index.html';
+};
+
+document.getElementById('check-in').onclick = () => {
+  location.href = 'check-in-out-example/index.html';
+};

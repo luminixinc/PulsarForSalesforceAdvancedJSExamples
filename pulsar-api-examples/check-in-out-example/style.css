@@ -1,0 +1,22 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+@media(max-width:576px) {
+  .text-change {
+      font-size: 12px !important;
+  };
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #d63384 !important;
+}

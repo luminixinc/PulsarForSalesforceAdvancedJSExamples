@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Salesforce Files API</title>
+  <!-- Import Boostrap CSS -->
+  <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css">
+  <!-- Import local CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container-fluid">
+    
+    <!-- Main Title of report -->
+    <div class="container pt-5">
+      <h1 class="h1-header text-center">Check-in / Check-out Example</h1>
+    </div>   
+
+    <!-- Select Account Card -->
+    <div class="container p-4" id="select-account" style="max-width: 30rem;">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Select Account</div>
+            <div class="container">
+              <ul class="list-group list-group-flush pb-3">
+                <div class="fw-bold text-center py-3 fs-5">Pulsar APIs used</div>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#update" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>updateQuery</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#select" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>select</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122912811/Pulsar+General+Information+API#getLocation" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>getLocation</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122912811/Pulsar+General+Information+API#userInfo" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>userInfo</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#lookupObject" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>lookupObject</code></a>
+              </ul>
+            </div>
+            <div class="card-body text-center gx-5">
+                  <button type="button" id="account-search" class="w-100 h-100 btn btn-lg btn-outline-primary">Account Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details of selected Account -->
+    <div class="container p-4 d-none" id="selected-account">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Selected Account</div>
+            <div class="card-body gx-5">
+              <div id="selected-account-details">
+                <!-- showAccountDetails function will add the Account details here -->
+              </div>
+              
+              <div class="d-flex">
+                <button type="button" id="account-confirm" class="w-100 mx-2 h-100 btn btn-outline-primary">Confirm</button>
+                <button type="button" id="search-again" class="w-100 mx-2 h-100 btn btn-outline-primary">Select New Account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Check-in Button -->
+    <div class="container p-4 d-none" id="check-in-container" style="max-width: 30rem;">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Check-in</div>
+            <div class="card-body gx-5 text-center">
+                <button type="button" id="check-in-button" class="btn btn-lg btn-outline-primary">Check-in</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Check-in Details -->
+    <div class="container p-4 d-none" id="check-in-details-container">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Check-in Details</div>
+            <div class="card-body gx-5">
+              <div id="check-in-details">
+                <!-- showAccountDetails function will add the Account details here -->
+              </div>
+              
+              
+              <div class="text-center d-none pt-3" id="check-out-container">
+                <button type="button" id="check-out" class="btn btn-lg btn-outline-primary">Check-out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation of Check-out -->
+    <div class="container p-4 d-none" id="check-out-confirmation" style="max-width: 30rem;">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Succesfully Checked-out!</div>
+            <div class="card-body gx-5">           
+              <div class="text-center pt-3">
+                <button type="button" id="return-home" class="btn btn-lg btn-outline-primary">Home</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Import Pulsar Bridge script -->
+  <script src="../resources/pulsar-bridge.js"></script> 
+  <!-- Import local JS file for create records -->
+  <script src="script.js"></script>
+  <!-- Import JS for Bootstrap -->
+  <script src="../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

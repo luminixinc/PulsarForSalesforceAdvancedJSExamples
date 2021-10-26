@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Salesforce Files API</title>
+  <style>
+    /* PDFs require inline styling. External Style Sheets do not load when generating a PDF */
+    @media only screen and (max-width: 767px) {
+
+    }
+
+    /* **************************************************************************************** */
+
+    @media only screen and (min-width: 768px) {
+      dt {
+        float: left;
+        clear: left;
+        width: 30%;
+        font-weight: bold;
+      }
+    }
+
+    /* **************************************************************************************** */
+
+    html {
+      font-family: Helvetica, Arial, sans-serif;
+      box-sizing: border-box;
+      font-size: 12px;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 500;
+    }
+
+    code {
+      color: #d63384 !important;
+    }
+
+    ul {
+      border-left: 1px solid #dee2e6 !important;
+      border-right: 1px solid #dee2e6 !important;
+      padding: 0;
+    }
+
+    li {
+      list-style-type: none;
+      padding: 1rem;
+    }
+
+    li:hover {
+      background-color: #f8f9fa;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      background: none;
+      color: inherit;
+      border: inherit;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+    }
+
+    dd {
+      padding-bottom: 1rem;
+    }
+
+    dt {
+      font-weight: bold;
+    }
+
+    label {
+      padding-right: 1rem;
+    }
+
+    input {
+      padding: 0.3rem;
+      font-size: 1.2rem;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .container {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .card {
+      border-radius: 0.3rem;
+      box-shadow: 0px 0.12rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      width: 75%;
+    }
+
+    .card-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      background-color: rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      padding: 1.5rem;
+    }
+
+    .header-text {
+      font-size: 2rem;
+      font-weight: 300;
+    }
+
+    .bold-header {
+      font-weight: 600;
+      font-size: 1.7rem;
+      padding: 1.5rem;
+    }
+
+    .container-api {
+      margin-left: 10%;
+      margin-right: 10%;
+      padding-bottom: 1rem;
+    }
+
+    .card-api {
+      max-width: 30rem;
+    }
+
+    .button-large:hover {
+      color: #fff;
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    .button-container {
+      padding: 3%;
+    }
+
+    .button-large {
+      width: 100%;
+      height: 4rem;
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: #0d6efd;
+      border-color: #0d6efd;
+      border-radius: 0.3rem;
+      border: 1px solid #0d6efd;
+    }
+
+    .card-body {
+      margin: 1rem;
+    }
+
+    .button-two {
+      width: 48%;
+      height: auto;
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: #0d6efd;
+      border-radius: 0.3rem;
+      border-color: #0d6efd;
+      border: 1px solid #0d6efd;
+      display: inline-block;
+      padding: 0.5rem
+    }
+
+    .button-two:hover {
+      color: #fff;
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    .button-div {
+      width: 100%;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      display: inline-flex;
+      justify-content: space-between;
+    }
+
+    .form-row {
+      padding: 1rem;
+      font-size: 1.4rem;
+      font-weight: 300;
+      width: 100%;
+      padding: 0;
+      margin-bottom: 1rem;
+      display: inline-flex;
+    }
+
+    .col-25 {
+      width: 35%;
+    }
+
+    .col-75 {
+      width: 65%;
+    }
+
+    .signature-pad {
+      width:400px;
+      height:200px;
+      background-color: white;
+    }
+
+    .border {
+      border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .signature-image-box {
+      display: flex;
+      padding: 3rem 0;
+      font-size: 1.4rem;
+    }
+
+    .sig-image {
+      margin-left: auto;
+    }
+
+    #completed-pdf-body {
+      font-size: 1.4rem;
+    }
+
+    #signature-image {
+      width: 300px;
+      height: 150px;
+    }
+
+    #generic-dropdown {
+      padding: 0.3rem;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="">
+    <!-- Main Title of report -->
+    <div class="container text-center">
+      <h1 class="">Signature Box & Save As PDF</h1>
+    </div>
+
+    <!-- Select Account Card -->
+    <div class="container" id="select-account">
+      <div class="card card-api">
+        <div class="card-header header-text text-center">
+          Select Account
+        </div>
+        <div class="text-center bold-header">
+          Pulsar APIs used
+        </div>
+        <div class="container-api">
+          <ul>
+            <li style="border-bottom: 1px solid #dee2e6 !important;">
+              <a
+                href="https://luminix.atlassian.net/wiki/spaces/PD/pages/601817089/Salesforce+Files+API#createsffilefromfilepath"
+                class="list-group-item list-group-item-action border-end border-start"
+                target="_blank"
+                ><code>createSFFileFromFilePath</code></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122716182/Pulsar+System+Interaction+API"
+                class="list-group-item list-group-item-action border-end border-start"
+                target="_blank"
+                ><code>saveAs</code></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#lookupObject"
+                class="list-group-item list-group-item-action border-end border-start"
+                target="_blank"
+                ><code>lookupObject</code></a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="button-container">
+          <button type="button" id="account-search" class="button-large">
+            Account Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details of selected Account -->
+    <div class="container" id="selected-account" style="display: none;">
+      <div class="card">
+        <div class="card-header header-text text-center">
+          Selected Account
+        </div>
+        <div class="card-body">
+          <div id="selected-account-details">
+            <!-- showAccountDetails function will add the Account details here -->
+          </div>
+
+          <div class="button-div" id="confirm-account-button-group">
+            <button type="button" id="account-confirm" class="button-two">
+              Confirm
+            </button>
+            <button type="button" id="search-again" class="button-two">
+              Select New Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form to be completed -->
+    <div class="container" id="form" style="display: none;">
+      <div class="card">
+        <div class="card-header header-text text-center">
+          Generic Form
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-25">
+              <label for="generic-dropdown" class="">Select an option</label>  
+            </div>
+            
+            <div class="col-75">
+              <select
+                class=""
+                id="generic-dropdown"
+                aria-label="Default select example"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+          
+          
+          <div class="form-row">
+            <div class="col-25">
+              <label for="input-first-name" class="">First Name:</label>
+            </div>
+            
+            <div class="col-75">
+              <input
+                type="text"
+                class="form-control"
+                id="input-first-name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-25">
+              <label for="input-last-name" class="">Last Name:</label>
+            </div>
+            
+            <div class="col-75">
+              <input
+                type="text"
+                class="form-control"
+                id="input-last-name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-25">
+              <label for="input-title" class="">Title:</label>
+            </div>
+            
+            <div class="col-75">
+              <input
+                type="text"
+                class="form-control"
+                id="input-title"
+                required
+              />
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="col-25">
+              <label for="input-phone-number" class="">Phone Number:</label>
+            </div>
+            
+            <div class="col-75">
+              <input
+                type="text"
+                class="form-control"
+                id="input-phone-number"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-25">
+              <label for="input-email-address" class="">Email Address:</label>
+            </div>
+            
+            <div class="col-75">
+              <input
+                type="text"
+                class="form-control"
+                id="input-email-address"
+                required
+              />
+            </div>
+          </div>
+          
+          <div class="button-container" id="signature-button">
+            <button type="button" id="create-signature" class="button-large">
+              Add Signature
+            </button>
+          </div>
+          
+          <!-- Signature Pad -->
+          <div class="container" id="signature-box" style="display: none;">
+            <div class="signature-container">
+              <canvas id="signature-pad" class="signature-pad border"></canvas>
+            </div>
+          </div>
+          <div class="button-div" id="signature-box-buttons" style="display: none;">
+            <button type="button" id="save-signature"
+              class="button-two">Save</button>
+            <button type="button" id="clear-signature"
+              class="button-two">Clear</button>
+          </div>
+          
+          <!-- Signature Image -->
+          <div class="signature-image-box" id="signature-image-box" style="display: none;">
+            <div class="">
+              Signature:
+            </div>
+            <div class="sig-image">
+              <img class="border" src="..." alt="..." id="signature-image">
+            </div>
+          </div>
+          
+          <div class="" id="save-form" style="display: none;">
+            <button type="button" id="save-form-as-pdf" class="button-large">Save form as PDF</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="completed-pdf" style="display: none;">
+      <div class="card">
+        <div class="card-header header-text text-center">
+          Generic Form
+        </div>
+        <div class="card-body">
+          <div id="completed-pdf-body">
+            <!-- showAccountDetails function will add the Account details here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Import Pulsar Bridge script -->
+  <script src="../resources/pulsar-bridge.js"></script> 
+  <!-- Import signature pad JS file -->
+  <script src="signature.min.js"></script>
+  <!-- Import local JS file -->
+  <script src="script.js"></script>
+</body>
+
+</html>
