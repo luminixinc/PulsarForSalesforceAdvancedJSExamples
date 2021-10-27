@@ -1,3 +1,5 @@
+let accountId;
+
 // Adds the image to the Gallery
 const addImageToGallery = (imageData) => {
   document.getElementById(imageData.buttonId).classList.remove("d-none");
@@ -37,6 +39,7 @@ const readSFFile = (id, buttonId, textId) => {
       text: '',
       url: ''
     }
+    console.log(JSON.stringify(responseData.data))
 
     if (isEmpty(responseData.data)) {
       addImageData.url = 'assets/batman.jpeg'
@@ -66,7 +69,7 @@ const createSFFileFromFilePath = (filePath) => {
   const request = {
     type: 'createSFFileFromFilePath',
     data: {
-      ParentId: '0015e00000AZCmrAAH', // Hard coded. You'll need to use your own
+      ParentId: accountId,
       // Name: "FileName.jpg",                    // Optional
 		  // ContentType: "image/jpeg",               // Optional -- manual entry of content type
       FilePath: filePath
@@ -133,7 +136,7 @@ document.getElementById('create-salesforcefile-from-camera').addEventListener('c
   const request = {
     type: 'createSFFileFromCamera',
     data: {
-      ParentId: '0015e00000AZCmrAAH', // Hard coded. You'll need to use your own
+      ParentId: accountId,
       // "Name" : "FileName.jpg"             Optional
     }
   };
@@ -149,3 +152,76 @@ document.getElementById('create-salesforcefile-from-camera').addEventListener('c
     }
   });
 });
+
+/* 
+  Takes the responseData from the selectAccount function and builds the page out with the data of the account
+*/
+const showAccountDetails = (responseData) => {
+  const accountName = responseData.Name.length > 0 ? responseData.Name : '***** No Data *****';
+  const accountNumber = responseData.AccountNumber.length > 0 ? responseData.AccountNumber : '***** No Data *****';
+  const localAccountId = responseData.Id.length > 0 ? responseData.Id : '***** No Data *****';
+  const accountWebsite = responseData.Website.length > 0 ? responseData.Website : '***** No Data *****';
+  accountId = localAccountId;
+
+  const createAccountDetailsInnerHtml =
+    `
+  <dl class="row" id="">
+    <dt class="col-md-3">Name: </dt>
+    <dd class="col-md-9">${accountName}</dd>
+    <dt class="col-md-3">Account Number: </dt>
+    <dd class="col-md-9">${accountNumber}</dd>
+    <dt class="col-md-3">Account ID: </dt>
+    <dd class="col-md-9">${localAccountId}</dd>
+    <dt class="col-md-3">Website: </dt>
+    <dd class="col-md-9">${accountWebsite}</dd>
+  </dl>
+  `
+
+  document.getElementById('selected-account').classList.remove('d-none');
+  document.getElementById('select-account').classList.add('d-none');
+  document.getElementById('selected-account-details').innerHTML = createAccountDetailsInnerHtml;
+}
+
+/*
+  API: lookupObject
+  
+  Opens native Account lookup page and returns the data for that account
+
+  The lookupObject command allows the user to select an object from a list view in the native Pulsar interface. 
+  Two options for the data portion of the request:
+  - specify fields and values to filter the resulting list:
+    { field1 : value1, field2 : value2 }  (this results in simple logic-- (field1=value1 AND field2=value2))
+
+  - specify the Salesforce ListView to use by supplying the special keyword "@@listviewid" and the associated ListView Id:
+    { "@@listviewid" : "00B123456789ABCDEF" }
+
+  https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#lookupObject
+*/
+const selectAccount = () => {
+  const request = {
+    type: 'lookupObject',
+    object: 'Account',
+    data: { /* Optional */ }
+  }
+
+  bridge.sendRequest(request, (responseData) => {
+    if ((responseData.type == 'lookupObjectResponse')
+      && (responseData.data != null)) {
+      showAccountDetails(responseData.data[0])
+    }
+  });
+}
+
+document.getElementById('search-again').onclick = () => {
+  selectAccount();
+}
+
+document.getElementById('account-confirm').onclick = () => {
+  document.getElementById('gallery-container').classList.remove('d-none');
+  document.getElementById('account-confirm').classList.add('d-none');
+  document.getElementById('search-again').classList.add('d-none');
+}
+
+document.getElementById('account-search').onclick = () => {
+  selectAccount();
+};

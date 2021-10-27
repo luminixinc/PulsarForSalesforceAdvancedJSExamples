@@ -20,9 +20,51 @@
         <h1 class="h1-header text-center p-5">
           Salesforce Images API
         </h1>
-    </div>   
+    </div>
 
-    <div class="container px-4">
+    <!-- Select Account Card -->
+    <div class="container p-4" id="select-account" style="max-width: 30rem;">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Select Account</div>
+            <div class="container">
+              <ul class="list-group list-group-flush pb-3">
+                <div class="fw-bold text-center py-3 fs-5">Pulsar APIs used</div>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/122716166/Native+Pulsar+UI+Interaction+API#lookupObject" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>lookupObject</code></a>
+                <a href="https://luminix.atlassian.net/wiki/spaces/PD/pages/8683529/Pulsar+Platform+-+JS+Bridge+API#create" class="list-group-item list-group-item-action border-end border-start" target="_blank"><code>create</code></a>
+              </ul>
+            </div>
+            <div class="card-body text-center gx-5">
+                  <button type="button" id="account-search" class="w-100 h-100 btn btn-lg btn-outline-primary">Account Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details of selected Account -->
+    <div class="container p-4 d-none" id="selected-account">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="card mb-2 rounded-3 shadow-sm">
+            <div class="card-header py-3 px-5 fs-4 text-center">Selected Account</div>
+            <div class="card-body gx-5">
+              <div id="selected-account-details">
+                <!-- showAccountDetails function will add the Account details here -->
+              </div>
+              
+              <div class="d-flex">
+                <button type="button" id="account-confirm" class="w-100 mx-2 h-100 btn btn-outline-primary">Confirm</button>
+                <button type="button" id="search-again" class="w-100 mx-2 h-100 btn btn-outline-primary">Select New Account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container px-4 d-none" id="gallery-container">
       <div class="row gx-5">
         <div class="col pb-5">
           <div class="card h-100 mb-4 rounded-3 shadow-sm">
