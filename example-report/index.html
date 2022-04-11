@@ -1,0 +1,63 @@
+<!-- Example Report
+
+lib.js has a method called startApp which will execute at startup. Examine
+this file to understand how the example works.
+
+Important Elements:
+
+* <div id="pdf-creation">
+  This <div> contains a series of <iframe> elements that will hold the content
+  that should be rendered to the PDF. Content outside of this should be hidden
+  prior to making the saveas JSAPI request.
+
+* <div id="pdf-preview">
+  This <div> is a placeholder element where the platform specific HTML will be
+  added. See the html/android-pdf.html, html/ios-pdf.html, and
+  html/windows-pdf.html.
+-->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link rel="stylesheet" href="styles/example-styles.css">
+    <script src="scripts/signature_pad.min.js" charset="UTF-8"></script>
+    <script src="scripts/setup-bridge.js" charset="UTF-8"></script>
+    <script src="scripts/ui-helpers.js" charset="UTF-8"></script>
+    <script src="scripts/signature-helpers.js" charset="UTF-8"></script>
+    <script src="scripts/jsapi-helpers.js" charset="UTF-8"></script>
+    <script src="scripts/htmlFragments/android-pdf.js" charset="UTF-8"></script>
+    <script src="scripts/htmlFragments/ios-pdf.js" charset="UTF-8"></script>
+    <script src="scripts/htmlFragments/windows-pdf.js" charset="UTF-8"></script>
+    <script src="scripts/strategies/android.strategy.js" charset="UTF-8"></script>
+    <script src="scripts/strategies/ios.strategy.js" charset="UTF-8"></script>
+    <script src="scripts/strategies/windows.strategy.js" charset="UTF-8"></script>
+    <script src="scripts/lib.js" charset="UTF-8"></script>
+
+    <title>Example Report</title>
+
+  </head>
+
+  <body>
+
+    <div id="account-selection-instructions" class="instructions"></div>
+    <div id="pdf-instructions" class="instructions"></div>
+    <div id="completed-instructions" class="instructions"></div>
+
+    <div id="pdf-creation">
+      <iframe id="headerIFrame" style="display: block; margin: 0; width: 100%; background-color: aquamarine;" frameBorder="0"></iframe>
+      <iframe id="bodyIFrame" style="display: block; margin: 0;" frameBorder="0"></iframe>
+      <iframe id="footerIFrame" style="display: block; margin: 0;" frameBorder="0"></iframe>
+    </div>
+
+    <div id="pdf-preview"></div>
+
+    <div id="document-actions">
+      <button id="print-document-button" type="button" class="blue button" name="saveAsPDF" onclick="saveAsPDF()">Save Document as PDF</button>
+      <button type="button" class="red button" name="exit" onclick="exitApp()">Exit Application</button>
+    </div>
+
+  </body>
+</html>

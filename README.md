@@ -12,9 +12,10 @@ Pulsar for Salesforce is a desktop/mobile app developed by Luminix, Inc that all
 * And... you can completely customize the UI by writing HTML/CSS/Javascript apps for embedding in Pulsar, (which is what the remainder of this document is about ;)
 
 ## What these are.
-* The `hello-world` folder contains more advanced exmaples on using an i-frame, monitoring sync process updates, proxy server for local development server, and a more complex server for running a more sophisticated, larger web app. 
-* The `pulsar-api-example` folder contains snippets and examples of some of the more commonly used APIs that you can copy, paste, and redesign for your use case. 
+* The `hello-world` folder contains more advanced exmaples on using an i-frame, monitoring sync process updates, proxy server for local development server, and a more complex server for running a more sophisticated, larger web app.
+* The `pulsar-api-example` folder contains snippets and examples of some of the more commonly used APIs that you can copy, paste, and redesign for your use case.
 
 ## How to use
 * Compress the contents of the `resources` folder and attach to the [`pulsar.docs.enableHTMLResources`](https://luminix.atlassian.net/wiki/spaces/PD/pages/49152017/Pulsar+as+a+Platform#globalsharedresources) setting. This bundles the various resources (HTML, CSS, Javascript, images, fonts, etc) independently of your individual `.pulsarapp` webapps, allowing these resources to be shared among all examples.
 * Zip the contents of the `pulsar-api-examples` folder into a single file with the extension `.pulsarapp` -- Pulsar will unzip and load the top-level index.html file (which itself can reference the other bundled scripts and resources.
+* For the `example-report`, you can download the included `create-service-report.pulsarapp` and upload it to your Salesforce organization's Files. Opening it from within Pulsar's Content Library will execute the example app. Alternatively, you can zip up the contents of the `example-report` folder (excluding the .pulsarapp) and change the `.zip` to `.pulsarapp`. This would allow any changes you've made to the code to be included in the application when you upload it to your organization's Files.

@@ -1,0 +1,86 @@
+/* ********************************************************************
+ * These styles apply only to our preview content. Once the content has
+ * been moved to the respective <iframe>, the styles here will no
+ * longer apply.
+ * ********************************************************************/
+body {
+  margin: 0;
+}
+
+#document {
+  height:auto!important;
+  overflow-y:auto!important;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+
+#android-table {
+  table-layout: fixed;
+  width: 100vw;
+  padding: 0px 8px;
+}
+
+#pdf-preview {
+  padding: 0px 8px;
+}
+
+#report-header, .header-bgcolor {
+  background-color: #e8fce4;
+}
+
+#report-body, .body-bgcolor {
+  background-color: #cffbe9;
+}
+
+#report-footer, .footer-bgcolor {
+  background-color: #ebffb6;
+}
+
+.preview {
+  padding: 0px 8px;
+}
+
+#signatures {
+  margin-top: 20px;
+}
+
+#document-actions {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.instructions {
+  font-family: sans-serif;
+  background-color: #f5f4ec;
+  margin: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.instructions-text {
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.button {
+  font-size: 14px;
+  font-family: sans-serif;
+  border: none;
+  color: #EEE;
+  background-color: #444;
+  display: inline-block;
+  padding: 8px 8px;
+  margin: 14px 14px;
+  border-radius: 4px;
+}
+
+/* Button Colors */
+.blue { background-color: #2a8dce!important; }
+.gray { background-color: #444!important; }
+.red { background-color: #ff0021!important; }

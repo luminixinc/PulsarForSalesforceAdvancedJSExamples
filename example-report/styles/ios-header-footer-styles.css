@@ -1,0 +1,27 @@
+/* ********************************************************************
+ * This stylesheet represents the tripled content size necessary for
+ * clearly printed headers and footers in iOS.
+ *
+ * A standard US letter sized page is 8.5 inches wide.
+ * There are 72 points in an inch.
+ * There are 612 points of width to a page.
+ * In a print context, there are 96 pixels per 72 points.
+ * There are 816 pixels of width to a page.
+ *
+ * However, iOS will condense the content to one third of the provided
+ * size.
+ *
+ * 816 * 3 = 2448px
+ *
+ * After much experimentation removing an additional 90px seems to account for
+ * page gutters / margins.
+ *
+ * Font sizes should be increased to match this increase as well.
+ * ********************************************************************/
+
+body { font-size: 48px; width: 2358px; }
+
+/* Note that these ids match the elements from our document that we place inside
+ * our iFrames. */
+#report-footer { width: 2358px; }
+#report-header { width: 2358px; }
