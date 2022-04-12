@@ -1,34 +1,6 @@
-/* ********************************************************************
- * The following is our standardized way of establishing a connection with
- * native Pulsar. It will ensure that we have access to the bridge when
- * startApp() is called.
-
- * Scroll to the next section to see code relevant to the creation of a report.
- * ********************************************************************/
-
-/* *********************************
- * Prepare for bridge initialization
- * *********************************/
-
-/* Launched from an unembedded state, startApp() fires on the bridge ready event. */
-document.addEventListener('WebViewJavascriptBridgeReady', function(event) {
-  bridge.init(event.bridge);
-
-  /* Note: If we are receiving this event, window.pulsar is undefined */
-  window.pulsar = {};
-  window.pulsar.bridge = event.bridge; // save initial bridge (for propagation to other pages)
-
-  /* !!!! IMPORTANT !!!!
-   * The bridge has been initialized and your app is ready for launch.
-   * startApp() is any arbitrary method that a developer may define
-   * to start their application using the Pulsar JS bridge.
-   */
-  startApp();
-}, false);
-
 /* ******************************
- * BEGIN Pulsar bridge definition
- * ******************************/
+* BEGIN Pulsar bridge boilerplate
+* ******************************/
 var BRIDGE_ON = true; // set to false to test file in desktop browser
 
 var bridge = function() {
@@ -98,32 +70,94 @@ var bridge = function() {
   return _bridge;
 }();
 /* ******************************
- *  END Pulsar bridge definition
+ * END Pulsar bridge boilerplate
  * ******************************/
 
 /* ******************************
- * BEGIN Pulsar onload definition
+ * BEGIN Pulsar bootstrap boilerplate
  * ******************************/
-const runningEmbedded = (window.top !== window.self);
-window.onload = function() {
 
+const runningEmbedded = (window.top !== window.self); // are we running embedded in an iframe?
+const runningStandAlone = !runningEmbedded;           // are we running in a stand-alone state in our own webview context?
+var runningEmbeddedInFSL = false;                     // are we running embedded in an iframe within Pulsar for FSL context?
+var refObjectId = undefined;                          // if launched from a record, this is the object Id in question
+
+/* ************************************************************************
+ * This is the entry point when running your app stand-alone (directly from
+ * Pulsar, not embedded in an iframe).
+ * ************************************************************************/
+document.addEventListener('WebViewJavascriptBridgeReady', standAloneBootstrap, false);
+
+function standAloneBootstrap(event) {
+  bridge.init(event.bridge);
+
+  // if we are receiving this event, window.pulsar should be undefined
+  console.assert(window.pulsar === undefined);
+  window.pulsar = {};
+  window.pulsar.bridge = event.bridge; // save initial bridge (for propagation to other pages)
+
+  commonBootstrap();
+}
+
+/* ************************************************************************
+ * This is the entry point when running your app embedded in another web
+ * view in Pulsar.
+ * ************************************************************************/
+window.onload = embeddedBootstrap;
+
+function embeddedBootstrap() {
   if (runningEmbedded && window.parent.pulsar && window.parent.pulsar.bridge) {
-    /* ************************************************************
-     * If the above is true, we are running in an embedded state.
-     * In this case, the above registered event listener will never
-     * fire as the webview we are running in already has
-     * established a Pulsar JS bridge.
-     * ************************************************************/
     window.pulsar = window.parent.pulsar; // ensure we will pass down the embedded window.pulsar
-    console.assert(window.pulsar.bridge !== undefined);
-    bridge.setup(window.pulsar.bridge);
+    bridge.setup(window.pulsar.bridge); // ensure we are setup properly for this embedded context
 
-    /* At this point we have the correct Pulsar JS Bridge object from the window itself.
-     * Start your app! */
-    startApp();
+    // FSL toplevel app sets additional methods you can use
+    runningEmbeddedInFSL = (window.pulsar['displayContentDocument'] !== undefined);
 
+    commonBootstrap();
+  } else {
+    if (runningEmbedded) {
+      /* ************************************************************
+       * Something has gone wrong if we are running embedded and find
+       * ourselves without window.parent.pulsar.bridge or
+       * window.parent.pulsar objects.
+       * ************************************************************/
+      console.log('OOPS, running embedded, but no window.parent.pulsar.bridge!');
+      throw 'embedded misconfiguration!';
+    } else {
+      /* ************************************************************
+       * 2021/02/04 NOTE: on iOS platform, windows.onload is called
+       * after `WebViewJavascriptBridgeReady` is sent, but on Windows
+       * and Android it is called before. So, because we may not have
+       * the initial bridge setup at this point, do nothing here.
+       * ************************************************************/
+      console.assert(runningStandAlone);
+    }
   }
+}
+
+/* ************************************************************************
+ * This is the common secondary-stage bootstrap where we perform sanity-
+ * checks and basic logging before launching your custom code.
+ * ************************************************************************/
+function commonBootstrap() {
+
+  /* ************************************************************
+   * At this point we should have the Pulsar JS Bridge either from
+   * `WebViewJavascriptBridgeReady` event (stand-alone) or via the
+   * parent context (running embedded).
+   * ************************************************************/
+  console.assert(window.pulsar.bridge !== undefined);
+  console.assert(!(runningEmbedded && runningStandAlone));
+  console.assert(runningEmbedded || runningStandAlone);
+
+  /* !!!! IMPORTANT !!!!
+   * The bridge has been initialized and your app is ready for launch.
+   * startPulsarApp() is any arbitrary method that a developer may (re-)define
+   * to start their application using the Pulsar JS bridge.
+   */
+  startPulsarApp();
 };
+
 /* ******************************
- * END Pulsar onload definition
+ * END Pulsar bootstrap boilerplate
  * ******************************/

@@ -22,7 +22,7 @@ let strategy;
 /* ********************************************************************/
 
 /* Get the current platform which is needed to formalize the PDF generation strategy. */
-function startApp() {
+function startPulsarApp() {
   console.log('Starting the application.');
   getPlatform().then( currentPlatform => {
     platform = currentPlatform;
