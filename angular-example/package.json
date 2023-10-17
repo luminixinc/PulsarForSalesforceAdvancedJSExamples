@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=.",
+    "build": "ng build --base-href=. --deploy-url angular-example/",
     "pack": "cd ./dist && del-cli angular-example.pulsarapp && move-cli angular-example/index.html index.html && bestzip angular-example.pulsarapp *",
     "dist": "npm run build && npm run pack",
     "watch": "ng build --watch --configuration development",
